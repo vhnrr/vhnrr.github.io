@@ -1,56 +1,153 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio - Vihan Rara Agustina</title>
+    <meta name="description" content="Portfolio of Vihan Rara Agustina, Freelance Designer specializing in Digital Accessibility">
+    <title>Vihan Rara Agustina | Digital Accessibility Designer</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script defer src="script.js"></script>
 </head>
 <body>
-    <header>
-        <div class="logo">
-            <h1>Vihan Rara Agustina</h1>
+    <header class="header">
+        <div class="header-container">
+            <div class="logo-container">
+                <h1 class="logo">Vihan<span>Rara</span></h1>
+                <p class="tagline">Digital Accessibility Designer</p>
+            </div>
+            
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="#about" class="nav-link">About</a></li>
+                    <li><a href="#projects" class="nav-link">Projects</a></li>
+                    <li><a href="#contact" class="nav-link">Contact</a></li>
+                </ul>
+            </nav>
+            
+            <div class="language-switcher">
+                <button onclick="changeLanguage('en')" class="lang-btn">
+                    <i class="fas fa-globe"></i> EN
+                </button>
+                <button onclick="changeLanguage('id')" class="lang-btn">
+                    <i class="fas fa-globe"></i> ID
+                </button>
+            </div>
         </div>
     </header>
 
-    <section class="hero">
-        <h2>Tentang saya</h2>
-        <p>Hi, I’m Vihan Rara Agustina. I’m a freelance designer specializing in digital accessibility.</p>
-        <div class="info">
-            <h3>Currently</h3>
-            <p>Undergraduate informatics Student at Gunadarma University</p>
+    <main class="main-content">
+        <section id="about" class="section fade-in">
+            <div class="section-container">
+                <h2 class="section-title" data-i18n="about_us">About Me</h2>
+                <div class="about-content">
+                    <div class="about-text">
+                        <p class="intro" data-i18n="description">Hi, I'm Vihan Rara Agustina, a freelance designer specializing in digital accessibility.</p>
+                        <p class="education">Undergraduate Informatics Student at Gunadarma University</p>
+                        <p class="location">Based in Indonesia, I work with English and Indonesian teams to create accessible digital experiences.</p>
+                        
+                        <div class="skills">
+                            <h3 class="skills-title" data-i18n="skills_title">Skills & Expertise</h3>
+                            <ul class="skills-list">
+                                <li>UI/UX Design</li>
+                                <li>Web Accessibility (WCAG)</li>
+                                <li>Responsive Design</li>
+                                <li>Figma & Adobe XD</li>
+                                <li>HTML/CSS</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="about-image">
+                        <div class="profile-image"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-            <h3>Latest Work</h3>
-            <p><a href="#">Accessibility, play your cards right</a></p>
+        <section id="projects" class="section fade-in">
+            <div class="section-container">
+                <h2 class="section-title" data-i18n="projects_title">My Projects</h2>
+                <p class="section-subtitle" data-i18n="projects_subtitle">Some of my recent work</p>
+                
+                <div class="projects-grid">
+                    <article class="project-card">
+                        <div class="project-content">
+                            <h3 class="project-title" data-i18n="hotel_project">Hotel Booking Web App</h3>
+                            <p class="project-description" data-i18n="hotel_description">An accessible hotel booking platform with focus on WCAG compliance.</p>
+                            <a href="https://github.com/vhnrr/project1" target="_blank" class="project-link">
+                                <span data-i18n="view_project">View Project</span> <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </article>
+                    
+                    <article class="project-card">
+                        <div class="project-content">
+                            <h3 class="project-title" data-i18n="attendance_project">Attendance System</h3>
+                            <p class="project-description" data-i18n="attendance_description">Web & Desktop application for employee attendance tracking.</p>
+                            <a href="https://github.com/vhnrr/project2" target="_blank" class="project-link">
+                                <span data-i18n="view_project">View Project</span> <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
 
-            <h3>Location</h3>
-            <p>Jakarta, Indonesia</p>
+        <section id="contact" class="section fade-in">
+            <div class="section-container">
+                <h2 class="section-title" data-i18n="connect_title">Let's Connect</h2>
+                <p class="section-subtitle" data-i18n="connect_subtitle">Feel free to reach out for collaborations or just to say hello!</p>
+                
+                <div class="contact-content">
+                    <div class="contact-info">
+                        <a href="mailto:vraragustina@gmail.com" class="email-button">
+                            <i class="fas fa-envelope"></i> <span data-i18n="email_me">Email me</span>
+                        </a>
+                        
+                        <div class="social-links">
+                            <a href="https://www.instagram.com/vrr_tas/" target="_blank" class="social-link" aria-label="Instagram">
+                                <i class="fab fa-instagram"></i> Instagram
+                            </a>
+                            <a href="https://www.linkedin.com/in/vihan-rara-agustina-3298251b3/" target="_blank" class="social-link" aria-label="LinkedIn">
+                                <i class="fab fa-linkedin"></i> LinkedIn
+                            </a>
+                            <a href="https://github.com/vhnrr" target="_blank" class="social-link" aria-label="GitHub">
+                                <i class="fab fa-github"></i> GitHub
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-form">
+                        <form class="form">
+                            <div class="form-group">
+                                <label for="name" data-i18n="name_label">Name</label>
+                                <input type="text" id="name" name="name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="email" data-i18n="email_label">Email</label>
+                                <input type="email" id="email" name="email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="message" data-i18n="message_label">Message</label>
+                                <textarea id="message" name="message" rows="5" required></textarea>
+                            </div>
+                            <button type="submit" class="submit-btn" data-i18n="send_button">Send Message</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <p class="copyright" data-i18n="footer_text">© 2025 Vihan Rara Agustina. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="#" class="footer-link" data-i18n="privacy_policy">Privacy Policy</a>
+                <a href="#" class="footer-link" data-i18n="accessibility_stmt">Accessibility Statement</a>
+            </div>
         </div>
-        <a href="#" class="btn">About me</a>
-    </section>
-
-    <section class="latest-work">
-        <h2>Latest Work</h2>
-        <div class="work-item">
-            <h3>Accessibility, play your cards right</h3>
-            <p>Between myths and facts, how can we defend accessibility effectively?</p>
-            <a href="#">Learn more</a>
-        </div>
-        <!-- Additional work items can be added here -->
-    </section>
-
-    <footer>
-        <h2>Shall we?</h2>
-        <p>Based in Indonesia, I work with English and Indonesia teams to create accessible digital experiences.</p>
-        <a href="mail to:vraragustina@gmail.com" class="btn">Email me</a>
-        
-        <nav>
-            <ul class="socials">
-                <li><a href="#">Newsletter</a></li>
-                <li><a href="#">LinkedIn</a></li>
-                <li><a href="#">Medium</a></li>
-            </ul>
-        </nav>
     </footer>
 </body>
 </html>
