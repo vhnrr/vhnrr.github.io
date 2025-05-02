@@ -1,9 +1,10 @@
-// object berisi terjemahan dalam dua bahasa: Inggris (en) dan Indonesia (id)
+// Object containing translations in two languages: English (en) and Indonesian (id)
 const translations = {
     en: {
         about_us: "About Me",
         description: "Hi, I'm Vihan Rara Agustina, a freelance designer specializing in digital accessibility.",
-        other_description: "Undergraduate Informatics Student at Gunadarma University. Based in Indonesia, I work with English and Indonesian teams to create accessible digital experiences.",
+        education: "Undergraduate Informatics Student at Gunadarma University.",
+        location: "Based in Indonesia, I work with English and Indonesian teams to create accessible digital experiences.",
         footer_text: "© 2025 Vihan Rara Agustina. All rights reserved.",
         skills_title: "Skills & Expertise",
         projects_title: "My Projects",
@@ -26,7 +27,8 @@ const translations = {
     id: {
         about_us: "Tentang Saya",
         description: "Hai, saya Vihan Rara Agustina, desainer lepas yang berspesialisasi dalam aksesibilitas digital.",
-        other_description: "Mahasiswa Informatika di Universitas Gunadarma. Berbasis di Indonesia, saya bekerja dengan tim berbahasa Inggris dan Indonesia untuk menciptakan pengalaman digital yang dapat diakses.",
+        education: "Mahasiswa Informatika di Universitas Gunadarma.", 
+        location: "Berbasis di Indonesia, saya bekerja dengan tim berbahasa Inggris dan Indonesia untuk menciptakan pengalaman digital yang dapat diakses.",
         footer_text: "© 2025 Vihan Rara Agustina. Hak cipta dilindungi.",
         skills_title: "Keahlian & Kemampuan",
         projects_title: "Proyek Saya",
@@ -48,11 +50,11 @@ const translations = {
     }
 };
 
-// fungsi untuk mengganti bahasa halaman
+// Function to change page language
 function changeLanguage(lang) {
-    document.documentElement.lang = lang; // set atribut bahasa HTML
+    document.documentElement.lang = lang;
 
-    // ubah konten elemen berdasarkan atribut data-i18n
+    // Update content elements based on data-i18n attribute
     document.querySelectorAll('[data-i18n]').forEach(element => {
         const key = element.getAttribute('data-i18n');
         if (translations[lang][key]) {
@@ -60,7 +62,7 @@ function changeLanguage(lang) {
         }
     });
 
-    // seleksi dan terjemahkan elemen berdasarkan selector
+    // Select and translate elements based on selector
     const translate_elements = {
         '.skills-title': 'skills_title',
         '#projects .section-subtitle': 'projects_subtitle',
@@ -86,19 +88,15 @@ function changeLanguage(lang) {
                 if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
                     element.placeholder = translation;
                 } else {
-                    // cek apakah ada HTML di dalam elemen
                     const html_content = element.innerHTML;
                     const has_html = /<[a-z][\s\S]*>/i.test(html_content);
 
                     if (has_html) {
-                        // buat elemen temporer untuk parsing HTML baru
                         const temp = document.createElement('div');
                         temp.innerHTML = translation;
                         if (temp.children.length === 0) {
-                            // ganti teks antar tag jika tidak mengandung HTML kompleks
                             element.innerHTML = element.innerHTML.replace(/>([^<]*)</, `>${translation}<`);
                         } else {
-                            // jika mengandung HTML kompleks, timpa seluruhnya
                             element.innerHTML = translation;
                         }
                     } else {
@@ -109,10 +107,10 @@ function changeLanguage(lang) {
         });
     }
 
-    // simpan pilihan bahasa ke local storage
+    // Save language preference to local storage
     localStorage.setItem('portfolio_lang', lang);
 
-    // atur tampilan tombol bahasa aktif
+    // Set active language button display
     document.querySelectorAll('.lang-btn').forEach(btn => {
         btn.classList.remove('active');
         if ((lang === 'en' && btn.textContent.includes('EN')) || (lang === 'id' && btn.textContent.includes('ID'))) {
@@ -121,34 +119,50 @@ function changeLanguage(lang) {
     });
 }
 
-// fungsi menangani pengiriman formulir
+// Form submission handler with Formspree integration
 function handleFormSubmit(event) {
-    event.preventDefault(); // cegah reload halaman
-
+    event.preventDefault();
+    
     const form = event.target;
-    const form_data = new FormData(form);
-    const data = Object.fromEntries(form_data.entries());
-
-    console.log('Form submitted:', data); // tampilkan data di konsol
-
-    alert(document.documentElement.lang === 'id' ?
-        'Pesan terkirim! Terima kasih telah menghubungi saya.' :
-        'Message sent! Thank you for reaching out.');
-
-    form.reset(); // reset formulir setelah submit
+    const formData = new FormData(form);
+    
+    // Replace with your Formspree endpoint
+    fetch("https://formspree.io/f/xkgrjgqa", {
+        method: "POST",
+        body: formData,
+        headers: {
+            'Accept': 'application/json'
+        }
+    })
+    .then(response => {
+        if (response.ok) {
+            alert(document.documentElement.lang === 'id' ?
+                'Pesan terkirim! Terima kasih telah menghubungi saya.' :
+                'Message sent! Thank you for reaching out.');
+            form.reset();
+        } else {
+            throw new Error('Network response was not ok');
+        }
+    })
+    .catch(error => {
+        alert(document.documentElement.lang === 'id' ?
+            'Terjadi kesalahan. Silakan coba lagi nanti.' :
+            'An error occurred. Please try again later.');
+        console.error('Error:', error);
+    });
 }
 
-// inisialisasi saat halaman dimuat
+// Initialize when page loads
 document.addEventListener('DOMContentLoaded', () => {
     const saved_lang = localStorage.getItem('portfolio_lang') || 'en';
-    changeLanguage(saved_lang); // atur bahasa awal
+    changeLanguage(saved_lang);
 
     const contact_form = document.querySelector('.form');
     if (contact_form) {
-        contact_form.addEventListener('submit', handleFormSubmit); // event listener untuk formulir
+        contact_form.addEventListener('submit', handleFormSubmit);
     }
 
-    const faders = document.querySelectorAll('.fade-in'); // elemen untuk animasi scroll
+    const faders = document.querySelectorAll('.fade-in');
     const appear_options = {
         threshold: 0.1,
         rootMargin: '0px 0px -50px 0px'
@@ -164,6 +178,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }, appear_options);
 
     faders.forEach(fader => {
-        appear_on_scroll.observe(fader); // amati elemen untuk efek muncul
+        appear_on_scroll.observe(fader);
     });
 });
