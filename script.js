@@ -3,6 +3,7 @@ const translations = {
     en: {
         about_us: "About Me",
         description: "Hi, I'm Vihan Rara Agustina, a freelance designer specializing in digital accessibility.",
+        other_description: "Undergraduate Informatics Student at Gunadarma University. Based in Indonesia, I work with English and Indonesian teams to create accessible digital experiences.",
         footer_text: "© 2025 Vihan Rara Agustina. All rights reserved.",
         skills_title: "Skills & Expertise",
         projects_title: "My Projects",
@@ -25,6 +26,7 @@ const translations = {
     id: {
         about_us: "Tentang Saya",
         description: "Hai, saya Vihan Rara Agustina, desainer lepas yang berspesialisasi dalam aksesibilitas digital.",
+        other_description: "Mahasiswa Informatika di Universitas Gunadarma. Berbasis di Indonesia, saya bekerja dengan tim berbahasa Inggris dan Indonesia untuk menciptakan pengalaman digital yang dapat diakses.",
         footer_text: "© 2025 Vihan Rara Agustina. Hak cipta dilindungi.",
         skills_title: "Keahlian & Kemampuan",
         projects_title: "Proyek Saya",
