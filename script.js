@@ -68,7 +68,7 @@ function changeLanguage(lang) {
         '#projects .section-subtitle': 'projects_subtitle',
         '#contact .section-subtitle': 'connect_subtitle',
         '.project-title': el => el.textContent.includes('Hotel') ? 'hotel_project' : 'attendance_project',
-        '.project-description': el => el.textContent.includes('booking') ? 'hotel_description' : 'attendance_description',
+        '.project-description': el => el.textContent.includes('booking') ? 'hotel_desc' : 'attendance_description',
         '.project-link span': 'view_project',
         '.email-button span': 'email_me',
         'label[for="name"]': 'name_label',
