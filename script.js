@@ -2,18 +2,23 @@
 const translations = {
     en: {
         about_us: "About Me",
+        //Heading for the about section
         description: "Hi, I'm Vihan Rara Agustina, a freelance designer specializing in digital accessibility.",
         education: "Undergraduate Informatics Student at Gunadarma University.",
         location: "Based in Indonesia, I work with English and Indonesian teams to create accessible digital experiences.",
         footer_text: "© 2025 Vihan Rara Agustina. All rights reserved.",
         skills_title: "Skills & Expertise",
+        //Body
         projects_title: "My Projects",
         projects_subtitle: "Some of my recent work",
         hotel_project: "Hotel Booking Web App",
         hotel_description: "An accessible hotel booking platform with focus on WCAG compliance.",
         attendance_project: "Attendance System",
         attendance_description: "Web & Desktop application for employee attendance tracking.",
+        bakery_project: "Bakery Management System",
+        bakery_description: "Desktop application for bakery shop inventory and sales management.",
         view_project: "View Project",
+        //Footer
         connect_title: "Let's Connect",
         connect_subtitle: "Feel free to reach out for collaborations or just to say hello!",
         email_me: "Email me",
@@ -37,6 +42,8 @@ const translations = {
         hotel_description: "Platform pemesanan hotel yang mengutamakan aksesibilitas sesuai standar WCAG.",
         attendance_project: "Sistem Presensi",
         attendance_description: "Aplikasi Web & Desktop untuk pelacakan kehadiran karyawan.",
+        bakery_project: "Sistem Manajemen Bakery",
+        bakery_description: " Aplikasi Desktop untuk manajemen inventori dan penjualan toko roti.",
         view_project: "Lihat Proyek",
         connect_title: "Hubungi Saya",
         connect_subtitle: "Silakan hubungi saya untuk kolaborasi atau sekadar menyapa!",
@@ -67,8 +74,16 @@ function changeLanguage(lang) {
         '.skills-title': 'skills_title',
         '#projects .section-subtitle': 'projects_subtitle',
         '#contact .section-subtitle': 'connect_subtitle',
-        '.project-title': el => el.textContent.includes('Hotel') ? 'hotel_project' : 'attendance_project',
-        '.project-description': el => el.textContent.includes('booking') ? 'hotel_desc' : 'attendance_description',
+        '.project-title': el => {
+        if (el.textContent.includes('Hotel')) return 'hotel_project';
+        if (el.textContent.includes('Attendance')) return 'attendance_project';
+        return 'bakery_project';
+        },
+        '.project-description': el => {
+        if (el.textContent.includes('booking')) return 'hotel_desc';
+        if (el.textContent.includes('attendance')) return 'attendance_description';
+        return 'bakery_description';
+        },
         '.project-link span': 'view_project',
         '.email-button span': 'email_me',
         'label[for="name"]': 'name_label',
