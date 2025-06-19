@@ -2,13 +2,11 @@
 const translations = {
     en: {
         about_us: "About Me",
-        //Heading for the about section
         description: "Hi, I'm Vihan Rara Agustina, a freelance designer specializing in digital accessibility.",
         education: "Undergraduate Informatics Student at Gunadarma University.",
         location: "Based in Indonesia, I work with English and Indonesian teams to create accessible digital experiences.",
         footer_text: "© 2025 Vihan Rara Agustina. All rights reserved.",
         skills_title: "Skills & Expertise",
-        //Body
         projects_title: "My Projects",
         projects_subtitle: "Some of my recent work",
         hotel_project: "Hotel Booking Web App",
@@ -18,7 +16,6 @@ const translations = {
         bakery_project: "Bakery Management System",
         bakery_description: "Desktop application for bakery shop inventory and sales management.",
         view_project: "View Project",
-        //Footer
         connect_title: "Let's Connect",
         connect_subtitle: "Feel free to reach out for collaborations or just to say hello!",
         email_me: "Email me",
@@ -26,8 +23,11 @@ const translations = {
         email_label: "Email",
         message_label: "Message",
         send_button: "Send Message",
+        sending: "Sending...",
         privacy_policy: "Privacy Policy",
-        accessibility_stmt: "Accessibility Statement"
+        accessibility_stmt: "Accessibility Statement",
+        form_success: "Thank you! Your message has been sent.",
+        form_error: "Oops! There was a problem sending your message."
     },
     id: {
         about_us: "Tentang Saya",
@@ -43,7 +43,7 @@ const translations = {
         attendance_project: "Sistem Presensi",
         attendance_description: "Aplikasi Web & Desktop untuk pelacakan kehadiran karyawan.",
         bakery_project: "Sistem Manajemen Bakery",
-        bakery_description: " Aplikasi Desktop untuk manajemen inventori dan penjualan toko roti.",
+        bakery_description: "Aplikasi Desktop untuk manajemen inventori dan penjualan toko roti.",
         view_project: "Lihat Proyek",
         connect_title: "Hubungi Saya",
         connect_subtitle: "Silakan hubungi saya untuk kolaborasi atau sekadar menyapa!",
@@ -52,8 +52,11 @@ const translations = {
         email_label: "Email",
         message_label: "Pesan",
         send_button: "Kirim Pesan",
+        sending: "Mengirim...",
         privacy_policy: "Kebijakan Privasi",
-        accessibility_stmt: "Pernyataan Aksesibilitas"
+        accessibility_stmt: "Pernyataan Aksesibilitas",
+        form_success: "Terima kasih! Pesan Anda telah terkirim.",
+        form_error: "Oops! Terjadi masalah saat mengirim pesan."
     }
 };
 
@@ -75,14 +78,16 @@ function changeLanguage(lang) {
         '#projects .section-subtitle': 'projects_subtitle',
         '#contact .section-subtitle': 'connect_subtitle',
         '.project-title': el => {
-        if (el.textContent.includes('Hotel')) return 'hotel_project';
-        if (el.textContent.includes('Attendance')) return 'attendance_project';
-        return 'bakery_project';
+            if (el.textContent.includes('Hotel')) return 'hotel_project';
+            if (el.textContent.includes('Attendance')) return 'attendance_project';
+            if (el.textContent.includes('Bakery')) return 'bakery_project';
+            return null;
         },
         '.project-description': el => {
-        if (el.textContent.includes('booking')) return 'hotel_desc';
-        if (el.textContent.includes('attendance')) return 'attendance_description';
-        return 'bakery_description';
+            if (el.textContent.includes('booking') || el.textContent.includes('pemesanan')) return 'hotel_description';
+            if (el.textContent.includes('attendance') || el.textContent.includes('presensi')) return 'attendance_description';
+            if (el.textContent.includes('bakery') || el.textContent.includes('toko roti')) return 'bakery_description';
+            return null;
         },
         '.project-link span': 'view_project',
         '.email-button span': 'email_me',
@@ -135,47 +140,74 @@ function changeLanguage(lang) {
 }
 
 // Form submission handler with Formspree integration
-function handleFormSubmit(event) {
-    event.preventDefault();
+// Form submission handler with Formspree integration
+document.getElementById('contact-form').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const form = e.target;
+    const status = document.getElementById('form-status');
+    const submitBtn = form.querySelector('button[type="submit"]');
+    const currentLang = document.documentElement.lang || 'en';
     
-    const form = event.target;
-    const formData = new FormData(form);
+    // Set loading state
+    if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = `<span>${translations[currentLang].sending}</span>`;
+    }
     
-    // Replace with your Formspree endpoint
-    fetch("https://formspree.io/f/xkgrjgqa", {
-        method: "POST",
-        body: formData,
-        headers: {
-            'Accept': 'application/json'
-        }
-    })
-    .then(response => {
+    // Clear previous status
+    status.textContent = '';
+    status.style.color = '';
+    status.className = 'form-status'; // Reset class
+
+    try {
+        const response = await fetch(form.action, {
+            method: 'POST',
+            body: new FormData(form),
+            headers: { 
+                'Accept': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest' // Helps Formspree identify AJAX requests
+            }
+        });
+
         if (response.ok) {
-            alert(document.documentElement.lang === 'id' ?
-                'Pesan terkirim! Terima kasih telah menghubungi saya.' :
-                'Message sent! Thank you for reaching out.');
+            // Success
+            status.textContent = translations[currentLang].form_success;
+            status.style.color = '#28a745';
+            status.classList.add('success');
             form.reset();
+            
+            // Hide success message after 5 seconds
+            setTimeout(() => {
+                status.textContent = '';
+            }, 5000);
         } else {
-            throw new Error('Network response was not ok');
+            // Handle Formspree validation errors
+            const errorData = await response.json();
+            if (errorData.errors) {
+                throw new Error(errorData.errors.map(error => error.message).join(", "));
+            } else {
+                throw new Error(translations[currentLang].form_error);
+            }
         }
-    })
-    .catch(error => {
-        alert(document.documentElement.lang === 'id' ?
-            'Terjadi kesalahan. Silakan coba lagi nanti.' :
-            'An error occurred. Please try again later.');
-        console.error('Error:', error);
-    });
-}
+    } catch (error) {
+        // Network errors or other issues
+        console.error('Form submission error:', error);
+        status.textContent = error.message || translations[currentLang].form_error;
+        status.style.color = '#dc3545';
+        status.classList.add('error');
+    } finally {
+        // Reset button state
+        if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = `<span>${translations[currentLang].send_button}</span>`;
+        }
+    }
+});
 
 // Initialize when page loads
 document.addEventListener('DOMContentLoaded', () => {
     const saved_lang = localStorage.getItem('portfolio_lang') || 'en';
     changeLanguage(saved_lang);
-
-    const contact_form = document.querySelector('.form');
-    if (contact_form) {
-        contact_form.addEventListener('submit', handleFormSubmit);
-    }
 
     const faders = document.querySelectorAll('.fade-in');
     const appear_options = {

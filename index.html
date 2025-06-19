@@ -8,6 +8,7 @@
     <title>Vihan Rara Agustina | Digital Accessibility Designer</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script defer src="script.js"></script>
 </head>
 <body>
@@ -94,7 +95,7 @@
                     <article class="project-card">
                         <div class="project-content">
                             <h3 class="project-title" data-i18n="bakery_project">Bakery Management System</h3>
-                            <p class="project-description2" data-i18n="bakery_description">Desktop application for bakery shop inventory and sales management.</p>
+                            <p class="project-description3" data-i18n="bakery_description">Desktop application for bakery shop inventory and sales management.</p>
                             <a href="https://github.com/vhnrr/Bakery_managementsystem" target="_blank" class="project-link">
                                 <span data-i18n="view_project">View Project</span> <i class="fas fa-arrow-right"></i>
                             </a>
@@ -127,25 +128,30 @@
                                 <i class="fab fa-github"></i> GitHub
                             </a>
                         </div>
-                    </div>
-                    
-                    <div class="contact-form">
-                        <form class="form" method="POST" action="https://formspree.io/f/xjvjlqzj" id="contact-form">
-                            <div class="form-group">
-                                <label for="name" data-i18n="name_label">Name</label>
-                                <input type="text" id="name" name="name" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="email" data-i18n="email_label">Email</label>
-                                <input type="email" id="email" name="email" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="message" data-i18n="message_label">Message</label>
-                                <textarea id="message" name="message" rows="5" required></textarea>
-                            </div>
-                            <button type="submit" class="submit-btn" data-i18n="send_button">Send Message</button>
-                        </form>
-                    </div>
+                    </div>    
+            <div class="contact-form">
+                <form class="form" method="POST" action="https://formspree.io/f/xyzjprqg" id="contact-form">
+                <div class="form-group">
+                    <label for="name" data-i18n="name_label">Name</label>
+                    <input type="text" id="name" name="name" required minlength="2" class="form-input">
+            </div>
+        
+            <div class="form-group">
+                    <label for="email" data-i18n="email_label">Email</label>
+                    <input type="email" id="email" name="email" required class="form-input">
+            </div>
+        
+            <div class="form-group">
+                    <label for="message" data-i18n="message_label">Message</label>
+                    <textarea id="message" name="message" rows="5" required minlength="10" class="form-textarea"></textarea>
+            </div>
+        
+                <div id="form-status" class="form-status" aria-live="polite"></div>
+                <button type="submit" class="submit-btn" data-i18n="send_button">
+                <span class="btn-text">Send Message</span>
+                    </button>
+                </form>
+            </div>
                 </div>
             </div>
         </section>
